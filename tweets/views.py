@@ -1,4 +1,5 @@
 import random
+from django.conf import settings
 from this import d
 from django.http import Http404, HttpResponse, JsonResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
@@ -9,9 +10,11 @@ from .models import Tweet
 
 # Create your views here.
 
+ALLOWED_HOSTS = settings.ALL_HOSTS
+
 
 def home_view(request, *args, **kwargs):
-    # return HttpResponse("<h1> hello world </h1>")
+    # r eturn HttpResponse("<h1> hello world </h1>")
     return render(request, "pages/home.html", contenxt={}, status=200)
 
 
@@ -27,15 +30,30 @@ def tweet_list_view(request, *args, **kwargs):
 
 
 def tweet_create_view(request, *args, **kwargs):
+    user = request.user
+
+    if not request.user.is_authenticated:
+        if request.is_ajax():
+            return JsonResponse({}, status=401)
+        return redirect(settings.LOGIN_URL)
+
     form = TweetForm(request.POST or None)
     next_url = request.POST.get("next") or None
     if form.is_Valid():
         obj = form.save(commit=False)
+        obj.user = request.user or None
         obj.save()
 
-        if next_url != None and is_safe_url(next_url):
+        if request.is_ajax():
+            # 201 == created Items
+            return JsonResponse(obj.serialize(), status=201)
+
+        if next_url != None and is_safe_url(next_url, ALLOWED_HOSTS):
             return redirect(next_url)
         form = TweetForm()
+    if form.errors:
+        if request.is_ajax():
+            return JsonResponse(form.errors, status=400)
     return render(request, 'components/form.html', context={"form": form})
 
 
