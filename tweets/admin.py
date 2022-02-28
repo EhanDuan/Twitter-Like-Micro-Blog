@@ -1,7 +1,12 @@
 from django.contrib import admin
 
 # Register your models here.
-from .models import Tweet
+from .models import Tweet, TweetLike
+
+
+class TweetLikeAdmin(admin.ModelAdmin):
+    class Meta:
+        model = TweetLike
 
 
 class TweetAdmin(admin.ModelAdmin):

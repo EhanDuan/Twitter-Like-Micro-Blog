@@ -17,7 +17,7 @@
      - Text
      - Image (media storage server)
    - Delete
-   - Retweeting
+   - Retweeting (read only serializer, create only serializer)
    - Liking
 
 3. Followings/Followers
