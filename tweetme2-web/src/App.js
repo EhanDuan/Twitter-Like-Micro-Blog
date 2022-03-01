@@ -1,28 +1,9 @@
-import React, {useEffect, userState} from 'react'
+import React from 'react'
 import logo from './logo.svg';
 import './App.css';
-import {Tweet} from './tweets'
+import {TweetsComponent} from './tweets'
 
 
-
-function TweetsList(props){
-  const [tweets, setTweets] = useState([])
-  
-  useEffect(() => {
-    
-    const myCallBack = (response, status) => {
-      // const tweetItems = [{"content": 123}, {"content" : "Hello World"}]
-      if(status === 200){
-        setTweets(tweetItems)
-      }
-    }
-    loadTweets(myCallBack)
-  }, [])
-
-  return tweets.map((item,index) => {
-    return <Tweet tweet={item} className='my-5 py-5 border bg-white text-dark' key={`${index}-{item.id}`}/>
-  })
-}
 
 
 function App() {

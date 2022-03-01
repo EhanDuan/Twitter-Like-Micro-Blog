@@ -1,7 +1,29 @@
-import React, {useEffect, userState}from 'react'
+import React, {useEffect, userState, useState}from 'react'
 import {loadTweets} from '../lookup'
 
-  export function TweetsList(props){
+export function TweetsComponent(props){
+    const textAreaRef = React.createRef()
+    const handleSubmit = (event) => {
+        event.preventDefault()
+        const newVal = textAreaRef.current.value
+        newVal = ' '
+    }
+
+    return <div className={props.className}>
+             <div className='col-12 mb-3'>
+                <form onSubmit={handleSubmit}>
+                    <textArea res={textAreaRef} requried={true} className='form-control' name='tweet'>
+
+                    </textArea>
+                    <button type='submit' className='btn btn-primary my-3'>Tweet</button>
+                </form>
+            </div>
+            <TweetsList/>
+        </div>
+
+}
+
+export function TweetsList(props){
     const [tweets, setTweets] = useState([])
     
     useEffect(() => {
@@ -23,14 +45,24 @@ import {loadTweets} from '../lookup'
 export function ActionBtn(props){
 
     const {tweet, action} = props
+    const [likes, setLikes] = useState(tweet.likes ? tweet.likes : 0)
+    const [userLikes, setUserLikes] = useState(tweet.userLike === true ? true : false)
     const className = props.className ? props.className : 'btn btn-primary btn-small'
     const actionDisplay = action.display ? action.display : 'Action'
-    let likes = tweet.likes
+
     const display = action === 'like' ? `${likes} ${actionDisplay}` : actionDisplay
     const handleClick = (event) => {
         event.preventDefault()
         if (action.type === 'like'){
-            console.log(tweet.likes + 1)
+            if(userLikes === true){
+                // perhaps i unlike it?
+                setLikes(likes - 1)
+                setUserLikes(!userLikes)
+            }else{
+                setLikes(tweet.likes + 1)
+                setUserLikes(true)
+            }
+            
         }
     }
     return <button className={className} onClick={handleClick}> {display}</button>
