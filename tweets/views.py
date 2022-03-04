@@ -41,7 +41,7 @@ def tweet_list_view(request, *args, **kwargs):
 @authentication_classes([SessionAuthentication])
 @permission_classes([IsAuthenticated])
 def tweet_create_view(request, *args, **kwargs):
-    serializer = TweetCreateSerializer(data=request.POST or None)
+    serializer = TweetCreateSerializer(data=request.data or None)
     if serializer.is_valid(raise_exception=True):
         serializer.save(user=request.user)
         return Response(serializer.data, status=201)
@@ -78,6 +78,10 @@ def tweet_create_view_pure_django(request, *args, **kwargs):
 @api_view(['GET'])
 def tweet_list_view(request, *args, **kwargs):
     qs = Tweet.objects.all()
+    username = request.GET.get('username')  # in the url: ..... ?username=....
+    if username != None:
+        # iexact: Justin == justin
+        qs = qs.filter(user__username__iexact=username)
     serializer = TweetSerializer(qs, many=True)
 
     return Response(serializer.data, status=200)
