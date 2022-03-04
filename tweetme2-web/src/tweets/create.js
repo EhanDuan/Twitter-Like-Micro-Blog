@@ -4,7 +4,8 @@ import { apiTweetCreate} from './lookup'
 
 
 
-function TweetCreate(props){
+export function TweetCreate(props){
+    const textAreaRef = React.createRef()
     const {didTweet} = PushSubscriptionOptions
     const handleBackendUpdate = (reponse, status) => {
         if(status === 201){

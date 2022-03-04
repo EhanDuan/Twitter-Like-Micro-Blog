@@ -34,19 +34,19 @@ export function TweetDetailComponent(props){
         if(status === 200){
             setTweet(response)
         }else{
-            alert("There was some error finding your tweet")
+            alert("There was some error finding your tweet.")
         }
     }
 
     useEffect(() => {
         if(didLookup === false){
 
-            apiTweetDetail(tweetId)
+            apiTweetDetail(tweetId, handleBackendLookup)
             setDidLookup(true)
         }
     }, [tweetId, didLookup, setDidLookup])
 
-    return
+    return tweet === null ? null : <Tweet tweet={tweet} className={props.className}/>
 }
 
 
