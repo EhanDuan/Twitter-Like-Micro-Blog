@@ -48,7 +48,8 @@ INSTALLED_APPS = [
     'corsheaders',
 
     # internal
-
+    'accounts',
+    'profile',
     'tweets',
 ]
 

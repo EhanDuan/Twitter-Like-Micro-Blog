@@ -17,7 +17,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path, include, re_path
 
 from accounts.views import(
     login_view,
@@ -26,7 +26,7 @@ from accounts.views import(
 )
 
 
-from tweets.views import tweets_list_view, tweets_detail_view, tweets_profile_view
+from tweets.views import tweets_list_view, tweets_detail_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -36,7 +36,7 @@ urlpatterns = [
     path('logout', logout_view),
     path('register', register_view),
     path('<int:tweet_id>', tweets_detail_view),
-    path('profile/<str:usename>', tweets_profile_view),
+    re_path(r'profiles?/', include('profiles.urls')),
 
 ]
 

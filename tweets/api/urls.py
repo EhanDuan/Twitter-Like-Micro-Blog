@@ -20,14 +20,14 @@ from django.contrib import admin
 from django.urls import path, include
 
 
-from tweets.views import local_tweets_list_view, local_tweets_detail_view, local_tweets_profile_view
+from tweets.views import tweets_list_view, tweets_detail_view, tweets_profile_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/tweets/', include('tweets.urls')),
-    path('', local_tweets_list_view),
-    path('<int:tweet_id>', local_tweets_detail_view),
-    path('profile/<str:usename>', local_tweets_profile_view),
+    path('', tweets_list_view),
+    path('<int:tweet_id>', tweets_detail_view),
+    path('profile/<str:usename>', tweets_profile_view),
 
 ]
 

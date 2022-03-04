@@ -6,7 +6,7 @@ from django.shortcuts import render
 
 # Create your views here.
 
-ALLOWED_HOSTS = settings.ALL_HOSTS
+ALLOWED_HOSTS = settings.ALLOWED_HOSTS
 
 
 def home_view(request, *args, **kwargs):
