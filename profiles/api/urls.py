@@ -13,25 +13,14 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.conf import settings
-from django.conf.urls.static import static
+"""
+CLIENT
 
-from django.contrib import admin
-from django.urls import path, include
+Base ENDPOINT /api/profiles
+"""
 
-
-from tweets.views import tweets_list_view, tweets_detail_view, tweets_profile_view, tweet_feed_view
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('api/tweets/', include('tweets.urls')),
-    path('', tweets_list_view),
-    path('feed/', tweet_feed_view),
-    path('<int:tweet_id>', tweets_detail_view),
-    path('profile/<str:usename>', tweets_profile_view),
+    path('<str:username>/follow', user_follow_view),
 
 ]
-
-if settings.DEBUG:
-    urlpatterns += static(settings.STATIC_URL,
-                          document_root=settings.STATIC_ROOT)
