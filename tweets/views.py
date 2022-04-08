@@ -10,12 +10,8 @@ ALLOWED_HOSTS = settings.ALLOWED_HOSTS
 
 
 def home_view(request, *args, **kwargs):
-    username = None
-
-    if request.user.is_authenticated:
-        username = request.user.username
-    # r eturn HttpResponse("<h1> hello world </h1>")
-    return render(request, "pages/home.html", contenxt={"username": username}, status=200)
+    # return HttpResponse("<h1> hello world </h1>")
+    return render(request, "pages/feed.html")
 
 
 def tweets_list_view(request, *args, **kwargs):

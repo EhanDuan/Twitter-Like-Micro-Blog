@@ -86,7 +86,8 @@ def get_paginated_queryset_response(qs, request):
     paginator.page_size = 20
 
     paginated_qs = paginator.paginate_queryset(qs)
-    serializer = TweetSerializer(paginated_qs, many=True)
+    serializer = TweetSerializer(
+        paginated_qs, many=True, context={"request": request})
     # Response(serializer.data, status=200)
     return paginator.get_paginated_response(serializer.data)
 

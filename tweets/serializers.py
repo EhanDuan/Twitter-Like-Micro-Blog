@@ -38,12 +38,12 @@ class TweetCreateSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError("This tweet is too long")
         return value
 
-    def get_user(self, obj):
-        return obj.user.id
+    # def get_user(self, obj):
+    #     return obj.user.id
 
 
 class TweetSerializer(serializers.ModelSerializer):
-    user = serializers.SerializerMethodField(read_only=True)
+    user = PublicProfileSerializer(source='user.profile', read_only=True)
     likes = serializers.SerializerMethodField(read_only=True)
     parent = TweetCreateSerializer(read_only=True)
     # content = serializers.SerializerMethodField(read_only=True)
@@ -57,8 +57,8 @@ class TweetSerializer(serializers.ModelSerializer):
     def get_likes(self, obj):
         return obj.likes.count()
 
-    def get_user(self, obj):
-        return obj.user.id
+    # def get_user(self, obj):
+    #     return obj.user.id
 
     # def get_content(self, obj):
     #     content = obj.content

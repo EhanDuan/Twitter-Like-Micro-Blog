@@ -26,12 +26,13 @@ from accounts.views import(
 )
 
 
-from tweets.views import tweets_list_view, tweets_detail_view
+from tweets.views import tweets_list_view, tweets_detail_view, home_view
 
 urlpatterns = [
+    path('', home_view),
     path('admin/', admin.site.urls),
     path('api/tweets/', include('tweets.api.urls')),
-    path('', tweets_list_view),
+    path('global/', tweets_list_view),
     path('login', login_view),
     path('logout', logout_view),
     path('register', register_view),
